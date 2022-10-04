@@ -3,8 +3,10 @@ import { Paper, InputBase, Button, IconButton } from "@material-ui/core"
 import { makeStyles, fade } from "@material-ui/core/styles"
 import { useState, useContext } from "react"
 import storeApi from "../../utils/storeApi"
+
 const useStyle = makeStyles((theme) => ({
   card: {
+    width: "280px",
     margin: theme.spacing(0, 1, 1, 1),
     paddingBottom: theme.spacing(4),
   },
@@ -25,23 +27,23 @@ const useStyle = makeStyles((theme) => ({
 
 const InputCard = ({ setOpen, listId, type }) => {
   const classes = useStyle()
-  const { addCard,addList} = useContext(storeApi)
+  const { addCard, addList } = useContext(storeApi)
   const [title, setTitle] = useState("")
   const handleOnChange = (e) => {
     setTitle(e.target.value)
   }
 
   const handleBtnConfirm = () => {
-    if(type==="card")
-    {addCard(title, listId)
-    setTitle("")
-    setOpen(false)}
-    else {
+    if (type === "card") {
+      addCard(title, listId)
+      setTitle("")
+      setOpen(false)
+    } else {
       addList(title)
       setTitle("")
-      setOpen(false)}
+      setOpen(false)
     }
-  
+  }
 
   return (
     <div>
@@ -50,7 +52,7 @@ const InputCard = ({ setOpen, listId, type }) => {
           <InputBase
             onChange={handleOnChange}
             multiline
-            onBlur={()=>setOpen(false)}
+            onBlur={() => setOpen(false)}
             fullWidth
             inputProps={{
               className: classes.input,
@@ -67,7 +69,8 @@ const InputCard = ({ setOpen, listId, type }) => {
           {type === "card" ? "+ Add a card" : "Add a List"}
         </Button>
         <div></div>
-        <IconButton onClick={() => setOpen(false)}></IconButton>
+        <IconButton onClick={() => setOpen(false)}>
+        </IconButton>
       </div>
     </div>
   )
