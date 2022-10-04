@@ -21,7 +21,7 @@ const List = ({ list }) => {
         {list.cards.map((card) => (
           <Card key={card.id} card={card} />
         ))}
-        <InputContainer listId={list.id}/>
+        <InputContainer listId={list.id} type="card" />
       </Paper>
     </div>
   )
