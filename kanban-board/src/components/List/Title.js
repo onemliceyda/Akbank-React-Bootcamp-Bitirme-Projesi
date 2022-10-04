@@ -1,7 +1,7 @@
-import React, { useState } from "react"
+import React, { useState,useContext } from "react"
 import { Typography, InputBase } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-
+import storeApi from  "../../utils/storeApi"
 const useStyle = makeStyles((theme) => ({
   root: {
     width: "300px",
@@ -24,21 +24,31 @@ const useStyle = makeStyles((theme) => ({
   },
 }))
 
-const Title = ({ title }) => {
+const Title = ({ title,listId}) => {
   const [open, setOpen] = useState(false)
   const classes = useStyle()
+  const {updateListTitle}=useContext(storeApi)
+  const[newTitle,setNewTitle]=useState(title)
+  const handleOnChange=(e)=>{
+    setNewTitle(e.target.value)
+  }
+  const handleOnBlur=()=>{
+    updateListTitle(newTitle,listId)
+   setOpen(false)
+  }
   return (
     <div>
       {open ? (
         <div>
           <InputBase
+          onChange={handleOnChange}
             autoFocus
-            value={title}
+            value={newTitle}
             inputProps={{
               className: classes.input,
             }}
             fullWidth
-            onBlur={() => setOpen(!open)}
+            onBlur={handleOnBlur}
           />
         </div>
       ) : (
