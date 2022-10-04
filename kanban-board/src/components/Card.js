@@ -8,11 +8,11 @@ const useStyle = makeStyles((theme) => ({
   },
 }))
 
-const Card = () => {
+const Card = ({ card }) => {
   const classes = useStyle()
   return (
     <div>
-      <Paper className={classes.card}>Card Component creating</Paper>
+      <Paper className={classes.card}>{card.title}</Paper>
     </div>
   )
 }

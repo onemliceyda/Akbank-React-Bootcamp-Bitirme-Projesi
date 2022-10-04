@@ -24,7 +24,7 @@ const useStyle = makeStyles((theme) => ({
   },
 }))
 
-const Title = () => {
+const Title = ({ title }) => {
   const [open, setOpen] = useState(false)
   const classes = useStyle()
   return (
@@ -33,7 +33,7 @@ const Title = () => {
         <div>
           <InputBase
             autoFocus
-            value="Todo"
+            value={title}
             inputProps={{
               className: classes.input,
             }}
@@ -47,7 +47,7 @@ const Title = () => {
             onClick={() => setOpen(!open)}
             className={classes.editableTitle}
           >
-            Todo
+            {title}
           </Typography>
         </div>
       )}
