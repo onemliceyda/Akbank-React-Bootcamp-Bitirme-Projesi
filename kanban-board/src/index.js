@@ -3,11 +3,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import LoginForm from "./components/LoginForm/LoginForm"
+import RegisterForm from "./components/RegisterForm/RegisterForm"
+
 import AuthContextProvider from "./contexts/AuthContext"
 ReactDOM.render(
   <React.StrictMode>
     <AuthContextProvider>
-   <LoginForm/>
+   <RegisterForm/>
    </AuthContextProvider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -1,6 +1,10 @@
 import * as React from "react"
 import { Typography, Box, TextField, Button } from "@material-ui/core"
-export const RegisterForm = () => {
+import { AuthContext } from "../../contexts/AuthContext"
+import { useContext } from "react"
+function RegisterForm() {
+  const { values, handleChange, handleSubmit } = useContext(AuthContext)
+    console.log(values);
   return (
     <div>
       <form>
@@ -31,6 +35,9 @@ export const RegisterForm = () => {
             variant="outlined"
             type={"text"}
             margin="normal"
+            name="username"
+            value={values.username}
+            onChange={handleChange}
           />
           <TextField
             id="outlined-basic"
@@ -39,6 +46,9 @@ export const RegisterForm = () => {
             variant="outlined"
             type={"email"}
             margin="normal"
+            name="email"
+            value={values.email}
+            onChange={handleChange}
           />
           <TextField
             id="outlined-basic"
@@ -47,11 +57,15 @@ export const RegisterForm = () => {
             variant="outlined"
             type={"password"}
             margin="normal"
+            name="password"
+            value={values.password}
+            onChange={handleChange}
           />
           <Button
             sx={{ marginTop: 3, borderRadius: 3 }}
             variant="outlined"
             color="primary"
+            onSubmit={handleSubmit(values)}
           >
             Login
           </Button>

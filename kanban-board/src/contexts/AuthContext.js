@@ -19,13 +19,11 @@ const AuthContextProvider = (props) => {
     setValues(formValues)
   }
 
-  const handleCheck = (e) => {
-    setChecked(e.target.checked)
-  }
+ 
 
   return (
     <AuthContext.Provider
-      value={{ values, checked, handleChange, handleSubmit, handleCheck }}
+      value={{ values, checked, handleChange, handleSubmit }}
     >
       {props.children}
     </AuthContext.Provider>
