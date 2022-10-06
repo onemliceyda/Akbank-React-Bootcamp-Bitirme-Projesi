@@ -4,6 +4,7 @@ import { makeStyles, fade } from "@material-ui/core/styles"
 import { useState, useContext } from "react"
 import storeApi from "../../utils/storeApi"
 
+
 const useStyle = makeStyles((theme) => ({
   card: {
     width: "280px",
@@ -77,3 +78,4 @@ const InputCard = ({ setOpen, listId, type }) => {
 }
 
 export default InputCard
+ 

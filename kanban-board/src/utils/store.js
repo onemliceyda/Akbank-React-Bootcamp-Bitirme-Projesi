@@ -13,7 +13,7 @@ const cards = [
   },
 ]
 
-const data = {
+const data = { //axiostan çekilen verileri buradan al.
   lists: {
     "list-1": {
       id: "list-1",

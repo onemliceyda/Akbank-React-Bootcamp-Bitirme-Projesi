@@ -7,6 +7,10 @@ import StoreApi from "./utils/storeApi"
 import InputContainer from "../src/components/Input/InputContainer"
 import { makeStyles } from "@material-ui/core/styles"
 import { DragDropContext, Droppable } from "react-beautiful-dnd"
+import LoginForm from  "./components/LoginForm/LoginForm"
+import RegisterForm from "./components/RegisterForm/RegisterForm"
+import AuthContextProvider from './contexts/AuthContext';
+
 const useStyle = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -135,6 +139,7 @@ function App() {
         </Droppable>
       </DragDropContext>
     </StoreApi.Provider>
+    
   )
 }
 export default App
