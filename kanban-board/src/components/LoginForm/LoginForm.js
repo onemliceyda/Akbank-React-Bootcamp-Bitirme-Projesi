@@ -6,12 +6,12 @@ import { AuthContext } from "../../contexts/AuthContext"
 
 function LoginForm() {
   const [formValues,setFormValues]=React.useState({password:"",email:""})
-  const {  handleSubmit } = useContext(AuthContext)
+  const { values, handleChange, handleSubmit } = useContext(AuthContext)
 
-  const handleChange=(e)=>{
+   /*const handleChange=(e)=>{
     setFormValues({ ...formValues, [e.target.name]: e.target.value }
       )
-  }
+  }*/
 
   console.log(formValues);
   return (
@@ -46,7 +46,7 @@ function LoginForm() {
             type={"email"}
             margin="normal"
             name="email"
-            value={formValues.email}
+            value={values.email}
             onChange={handleChange}
           />
           <TextField
@@ -57,7 +57,7 @@ function LoginForm() {
             type={"password"}
             margin="normal"
             name="password"
-            value={formValues.password}
+            value={values.password}
             onChange={handleChange}
           />
           <Button
@@ -69,7 +69,7 @@ function LoginForm() {
             Login
           </Button>
 
-          <Button sx={{ marginTop: 3, borderRadius: 3 }} onSubmit={handleSubmit(formValues)} type="button">
+          <Button sx={{ marginTop: 3, borderRadius: 3 }} onSubmit={handleSubmit(values)} type="button">
             Change to SignUp
           </Button>
         </Box>

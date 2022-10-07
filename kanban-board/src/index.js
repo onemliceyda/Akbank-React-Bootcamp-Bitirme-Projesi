@@ -8,9 +8,10 @@ import RegisterForm from "./components/RegisterForm/RegisterForm"
 import AuthContextProvider from "./contexts/AuthContext"
 ReactDOM.render(
   <React.StrictMode>
-    <AuthContextProvider>
+    {/* <AuthContextProvider>
    <RegisterForm/>
-   </AuthContextProvider>
-  </React.StrictMode>,
+</AuthContextProvider> */}
+   <App/>
+</React.StrictMode>,
   document.getElementById('root')
 );
