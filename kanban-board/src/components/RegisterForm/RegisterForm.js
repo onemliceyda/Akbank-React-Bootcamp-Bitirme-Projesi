@@ -2,8 +2,11 @@ import * as React from "react"
 import { Typography, Box, TextField, Button } from "@material-ui/core"
 import { AuthContext } from "../../contexts/AuthContext"
 import { useContext } from "react"
+import { useNavigate } from "react-router-dom"
+import { register } from "../../services/api"
 function RegisterForm() {
   const { values, handleChange, handleSubmit } = useContext(AuthContext)
+  let navigate = useNavigate()
     console.log(values);
   return (
     <div>
@@ -66,6 +69,9 @@ function RegisterForm() {
             variant="outlined"
             color="primary"
             onSubmit={handleSubmit(values)}
+            onClick={()=>{
+              register(values)
+              navigate("/board")}}
           >
             Login
           </Button>

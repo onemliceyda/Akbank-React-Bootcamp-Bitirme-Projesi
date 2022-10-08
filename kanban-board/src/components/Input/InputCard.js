@@ -1,9 +1,9 @@
 import React from "react"
 import { Paper, InputBase, Button, IconButton } from "@material-ui/core"
-import { makeStyles, fade } from "@material-ui/core/styles"
+import { makeStyles, alpha } from "@material-ui/core/styles"
 import { useState, useContext } from "react"
+import { addNewCard } from "../../services/api"
 import storeApi from "../../utils/storeApi"
-
 
 const useStyle = makeStyles((theme) => ({
   card: {
@@ -18,7 +18,7 @@ const useStyle = makeStyles((theme) => ({
     background: "#5AAC44",
     color: "#fff",
     "&:hover": {
-      background: fade("#5AAC44", 0.75),
+      background: alpha("#5AAC44", 0.75),
     },
   },
   confirm: {
@@ -39,6 +39,7 @@ const InputCard = ({ setOpen, listId, type }) => {
       addCard(title, listId)
       setTitle("")
       setOpen(false)
+     
     } else {
       addList(title)
       setTitle("")
@@ -70,12 +71,10 @@ const InputCard = ({ setOpen, listId, type }) => {
           {type === "card" ? "+ Add a card" : "Add a List"}
         </Button>
         <div></div>
-        <IconButton onClick={() => setOpen(false)}>
-        </IconButton>
+        <IconButton onClick={() => setOpen(false)}></IconButton>
       </div>
     </div>
   )
 }
 
 export default InputCard
- 
