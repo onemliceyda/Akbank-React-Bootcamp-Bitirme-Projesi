@@ -12,7 +12,7 @@ const useStyle = makeStyles((theme) => ({
 const Card = ({ card, index }) => {
   const classes = useStyle()
   return (
-    <Draggable draggableId={card.id} index={index}>
+    <Draggable draggableId={card.id} index={index} >
       {(provided) => (
         <div
           ref={provided.innerRef}

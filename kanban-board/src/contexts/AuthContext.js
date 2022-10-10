@@ -7,8 +7,15 @@ const AuthContextProvider = (props) => {
     username: "",
     email: "",
     password: "",
+    passwordConfirm: "",
   })
 
+  const [token, setToken] = useState("")
+  const login = (data) => {
+    setToken(data.token)
+    console.log("lütfen çalışıyor ollll :(", data)
+  }
+  //buraya configi tanımla token yerine kullan ->token yerine configi yolla :! contexte at 
   const [checked, setChecked] = useState(true)
 
   const handleChange = (e) => {
@@ -19,11 +26,9 @@ const AuthContextProvider = (props) => {
     setValues(formValues)
   }
 
- 
-
   return (
     <AuthContext.Provider
-      value={{ values, checked, handleChange, handleSubmit }}
+      value={{ values, checked, handleChange, handleSubmit, login, token }}
     >
       {props.children}
     </AuthContext.Provider>

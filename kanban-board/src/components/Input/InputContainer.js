@@ -34,7 +34,6 @@ const InputContainer = ({ listId, type }) => {
           onClick={() => setOpen(!open)}
         >
           <Typography>
-          
             {type === "card" ? "+ Add a card" : "+ Add another List"}
           </Typography>
         </Paper>

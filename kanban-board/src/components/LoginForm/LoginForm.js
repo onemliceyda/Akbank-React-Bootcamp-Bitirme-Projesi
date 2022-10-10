@@ -2,44 +2,24 @@ import * as React from "react"
 import { useContext } from "react"
 import { Typography, Box, TextField, Button } from "@material-ui/core"
 import { useNavigate } from "react-router-dom"
-import { login } from "../../services/api"
+import { login as auth } from "../../services/api"
 import { AuthContext } from "../../contexts/AuthContext"
-import * as Yup from "yup"
-import { useFormik } from "formik"
+import { useForm } from "react-hook-form"
 
 function LoginForm() {
   const [formValues, setFormValues] = React.useState({
+    username: "",
     password: "",
-    email: "",
   })
-  const { values, handleChange, handleSubmit } = useContext(AuthContext)
-  let navigate = useNavigate()
+  const { login } = useContext(AuthContext)
 
-  /*const handleChange=(e)=>{
-    setFormValues({ ...formValues, [e.target.name]: e.target.value }
-      )
-  }*/
-  console.log(formValues)
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: Yup.object({
-      email: Yup.string().email('Lütfen geçerli bir e-mail giriniz').required(
-        "Zorunlu alandır."
-      ),
-      password: Yup.string()
-        .max(8, "Maximum 8 karakter olmalıdır")
-        .min(4, "Minimum 4 karakter olmalıdır")
-        .required("Zorunlu alandır."),
-    }),
-    onSubmit: (values, { resetForm }) => {
-      login(formik.values.email, formik.values.password)
-      resetForm()
-      navigate("/board")
-    },
-  })
+  let navigate = useNavigate()
+  const handleChange = (e) => {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value })
+  }
+  const handleSubmit = () => {
+    setFormValues(formValues)
+  }
   return (
     <div>
       <form>
@@ -67,22 +47,19 @@ function LoginForm() {
           </Typography>
 
           <TextField
-            
             required
             id="outlined-basic"
-            placeholder="Email"
-            label="Email"
+            placeholder="Username"
+            label="Username"
             variant="outlined"
-            type={"email"}
+            type={"text"}
             margin="normal"
-            name="email"
-            value={formik.values.email}
-            onBlur={formik.handleBlur}
+            name="username"
+            value={formValues.username}
             onChange={handleChange}
           />
 
           <TextField
-            
             required
             id="outlined-basic"
             placeholder="Password"
@@ -91,17 +68,18 @@ function LoginForm() {
             type={"password"}
             margin="normal"
             name="password"
-            value={formik.values.password}
-            onBlur={formik.handleBlur}
+            value={formValues.password}
             onChange={handleChange}
           />
-  
+
           <Button
             sx={{ marginTop: 3, borderRadius: 3 }}
             variant="outlined"
             color="primary"
             onClick={() => {
-              login(formValues)
+              auth(formValues).then(({ data }) => {
+                login(data)
+              })
               navigate("/board")
             }}
           >
@@ -110,7 +88,7 @@ function LoginForm() {
 
           <Button
             sx={{ marginTop: 3, borderRadius: 3 }}
-            onSubmit={handleSubmit(values)}
+            onSubmit={handleSubmit}
             type="button"
             onClick={() => {
               navigate("/register")

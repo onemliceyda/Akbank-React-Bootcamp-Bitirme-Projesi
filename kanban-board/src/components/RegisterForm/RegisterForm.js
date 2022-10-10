@@ -7,7 +7,6 @@ import { register } from "../../services/api"
 function RegisterForm() {
   const { values, handleChange, handleSubmit } = useContext(AuthContext)
   let navigate = useNavigate()
-    console.log(values);
   return (
     <div>
       <form>
@@ -44,17 +43,6 @@ function RegisterForm() {
           />
           <TextField
             id="outlined-basic"
-            placeholder="Email"
-            label="Email"
-            variant="outlined"
-            type={"email"}
-            margin="normal"
-            name="email"
-            value={values.email}
-            onChange={handleChange}
-          />
-          <TextField
-            id="outlined-basic"
             placeholder="Password"
             label="Password"
             variant="outlined"
@@ -64,13 +52,26 @@ function RegisterForm() {
             value={values.password}
             onChange={handleChange}
           />
+          <TextField
+            id="outlined-basic"
+            placeholder="Password Confirm"
+            label="Password Confirm"
+            variant="outlined"
+            type={"password"}
+            margin="password"
+            name="passwordConfirm"
+            value={values.passwordConfirm}
+            onChange={handleChange}
+          />
           <Button
             sx={{ marginTop: 3, borderRadius: 3 }}
             variant="outlined"
             color="primary"
             onSubmit={handleSubmit(values)}
             onClick={()=>{
-              register(values)
+              register(values).then(({data})=>{
+                console.log(data);
+              })
               navigate("/board")}}
           >
             Login
