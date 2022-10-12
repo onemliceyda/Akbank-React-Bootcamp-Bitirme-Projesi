@@ -3,7 +3,8 @@ import { Typography, Box, TextField, Button } from "@material-ui/core"
 import { AuthContext } from "../../contexts/AuthContext"
 import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
-import { register } from "../../services/api"
+import {auth} from "../../services/http/endpoints/auth"
+
 function RegisterForm() {
   const { values, handleChange, handleSubmit } = useContext(AuthContext)
   let navigate = useNavigate()
@@ -69,7 +70,7 @@ function RegisterForm() {
             color="primary"
             onSubmit={handleSubmit(values)}
             onClick={()=>{
-              register(values).then(({data})=>{
+              auth.register(values).then(({data})=>{
                 console.log(data);
               })
               navigate("/board")}}

@@ -16,17 +16,13 @@ const cards = [
 const data = { //axiostan çekilen verileri buradan al.
   lists: {
     "list-1": {
-      id: "list-1",
-      title: "Todo",
+      id:"1" ,
+      title:"sdssd" ,
       cards,
-    },
-    "list-2": {
-      id: "list-2",
-      title: "Duingg",
-      cards:[]
-    },
+    }
+   
   },
-  listIds: ["list-1","list-2"],
+  listIds: ["list-1"],
 }
 
 export default data

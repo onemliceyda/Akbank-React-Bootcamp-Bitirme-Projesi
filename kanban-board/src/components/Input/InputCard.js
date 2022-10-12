@@ -2,9 +2,10 @@ import React from "react"
 import { Paper, InputBase, Button, IconButton } from "@material-ui/core"
 import { makeStyles, alpha } from "@material-ui/core/styles"
 import { useState, useContext } from "react"
-import { addNewBoard, addNewCard } from "../../services/api"
+import { addNewCard, addNewList } from "../../services/api"
 import storeApi from "../../utils/storeApi"
 import { AuthContext } from "../../contexts/AuthContext"
+import board from "../../services/http/endpoints/board"
 const useStyle = makeStyles((theme) => ({
   card: {
     width: "280px",
@@ -45,11 +46,8 @@ const InputCard = ({ setOpen, listId, type }) => {
       addCard(title, listId)
       setTitle("")
       setOpen(false)
-    /*   addNewCard(listId,title,config).then(({data})=>{
-        //console.log(data); }) */
-     
       console.log(title);
-      addNewBoard({title:"Bu bizim ilk boardumuz"},config).then(({data})=>{
+      board.addNewCard({title}).then(({data})=>{
         console.log(data);
       })
       
@@ -58,6 +56,9 @@ const InputCard = ({ setOpen, listId, type }) => {
       addList(title)
       setTitle("")
       setOpen(false)
+      board.addNewList(title,listId,config).then(({data})=>{
+        console.log(data);
+      })
     }
   }
 

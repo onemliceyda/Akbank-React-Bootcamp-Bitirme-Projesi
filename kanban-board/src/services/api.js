@@ -12,20 +12,26 @@ export function register(registerModel) {
   return axios.post(baseUrl + "auth/register", registerModel)
 }
 
-export function addNewCard(boardId, newTitle,config) {
+/* export function addNewCards(boardId, newTitle,config) {
   return axios.post(baseUrl + "board/" + boardId, {
     title: newTitle,
   },config)
-} //güncelleme yapmalı forbidden diyor
+}  */
 
-export function addNewListTitle(title) {
-  return axios.post(baseUrl + "board", {
+export function addNewListTitle(title,config) {
+  return axios.post(baseUrl + "board",{
     title,
-  })
-} //forbidden dönüyor
+  },config)
+} 
 
-export function addNewBoard(payload,config) {
+export function addNewCard(payload,config) {
     return axios.post(`${baseUrl}board`,payload,config)
+  }
+  export function addNewList(title,boardId,config) {
+    return axios.post(baseUrl + "board",{
+      title,
+      boardId,
+    },config)
   }
   
 export function getList(boardId) {

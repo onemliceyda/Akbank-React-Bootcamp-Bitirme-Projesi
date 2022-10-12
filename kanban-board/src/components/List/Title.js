@@ -3,6 +3,7 @@ import { Typography, InputBase } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import storeApi from "../../utils/storeApi"
 import {addNewListTitle} from "../../services/api"
+import { AuthContext } from "../../contexts/AuthContext"
 const useStyle = makeStyles((theme) => ({
   root: {
     width: "300px",
@@ -25,18 +26,23 @@ const useStyle = makeStyles((theme) => ({
   },
 }))
 
-const Title = ({ title, listId }) => {
+const Title = ({ title,listId }) => {
   const [open, setOpen] = useState(false)
   const classes = useStyle()
+  const [newTitle, setNewTitle] = useState("")
   const { updateListTitle } = useContext(storeApi)
-  const [newTitle, setNewTitle] = useState(title)
+  const {token}=useContext(AuthContext);
+  const config = {
+    headers: { Authorization: `Bearer ${token}` }
+  }; 
   const handleOnChange = (e) => {
     setNewTitle(e.target.value)
   }
   const handleOnBlur = () => {
-    updateListTitle(newTitle, listId)
-    addNewListTitle(newTitle)
-    console.log(newTitle);
+    updateListTitle(newTitle,listId)
+    addNewListTitle(newTitle,config).then(({data})=>{
+      console.log(data);
+    })
     setOpen(false)
   }
   return (

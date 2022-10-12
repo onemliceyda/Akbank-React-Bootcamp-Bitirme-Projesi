@@ -1,5 +1,6 @@
+import { useEffect } from "react"
 import { createContext, useState } from "react"
-
+import instance from "../services/instance"
 export const AuthContext = createContext()
 
 const AuthContextProvider = (props) => {
@@ -11,11 +12,28 @@ const AuthContextProvider = (props) => {
   })
 
   const [token, setToken] = useState("")
+  useEffect(() => {
+    instance.interceptors.request.use((config) => {
+      console.log("buraya gelebiliyor mu");
+      const _config = { ...config }
+      _config.headers = {
+        ...config.headers,
+        authorization: "Bearer" + token,
+      }
+      console.log(config);
+      return _config
+    })
+    /* instance.interceptors.response.use((response)=>{},(error)=>{
+      if([500,401,403].includes(error.response.status)){
+        console.log("Bir hata oluştu logine yönlendirileceksiniz.");
+      } //bu hatanın çıkacağı yer kontrol edilecek
+     }) */
+  }, [token])
+
   const login = (data) => {
     setToken(data.token)
     console.log("lütfen çalışıyor ollll :(", data)
   }
-  //buraya configi tanımla token yerine kullan ->token yerine configi yolla :! contexte at 
   const [checked, setChecked] = useState(true)
 
   const handleChange = (e) => {

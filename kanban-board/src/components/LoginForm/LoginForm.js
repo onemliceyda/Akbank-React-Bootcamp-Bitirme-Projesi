@@ -2,9 +2,9 @@ import * as React from "react"
 import { useContext } from "react"
 import { Typography, Box, TextField, Button } from "@material-ui/core"
 import { useNavigate } from "react-router-dom"
-import { login as auth } from "../../services/api"
 import { AuthContext } from "../../contexts/AuthContext"
-import { useForm } from "react-hook-form"
+import {auth} from "../../services/http/endpoints/auth"
+
 
 function LoginForm() {
   const [formValues, setFormValues] = React.useState({
@@ -77,8 +77,9 @@ function LoginForm() {
             variant="outlined"
             color="primary"
             onClick={() => {
-              auth(formValues).then(({ data }) => {
+              auth.login(formValues).then(({ data }) => {
                 login(data)
+               
               })
               navigate("/board")
             }}
