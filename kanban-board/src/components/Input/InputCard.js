@@ -5,7 +5,7 @@ import { useState, useContext } from "react"
 import { addNewCard, addNewList } from "../../services/api"
 import storeApi from "../../utils/storeApi"
 import { AuthContext } from "../../contexts/AuthContext"
-import board from "../../services/http/endpoints/board"
+import {board} from "../../services/http/endpoints/board"
 const useStyle = makeStyles((theme) => ({
   card: {
     width: "280px",
@@ -32,11 +32,11 @@ const InputCard = ({ setOpen, listId, type }) => {
   const { addCard, addList } = useContext(storeApi)
   const [title, setTitle] = useState("")
 
-  const {token}=useContext(AuthContext);
+   const {token}=useContext(AuthContext);
   const config = {
     headers: { Authorization: `Bearer ${token}` }
   }; 
-   
+  
   const handleOnChange = (e) => {
     setTitle(e.target.value)
   }
@@ -47,7 +47,7 @@ const InputCard = ({ setOpen, listId, type }) => {
       setTitle("")
       setOpen(false)
       console.log(title);
-      board.addNewCard({title}).then(({data})=>{
+      board.addNewCard({title},config).then(({data})=>{
         console.log(data);
       })
       
@@ -56,7 +56,7 @@ const InputCard = ({ setOpen, listId, type }) => {
       addList(title)
       setTitle("")
       setOpen(false)
-      board.addNewList(title,listId,config).then(({data})=>{
+      board.addNewList(title,listId).then(({data})=>{
         console.log(data);
       })
     }

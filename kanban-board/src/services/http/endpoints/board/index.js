@@ -1,2 +1,1 @@
-import * as methods from "./methods"
-export default methods
+export * as board from "./methods";

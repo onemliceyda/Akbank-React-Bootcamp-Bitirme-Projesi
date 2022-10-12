@@ -1,8 +1,8 @@
 import service from "../../../instance"
 export const login = (loginmodel) => {
-  service.post("auth/login", loginmodel)
+ return service.post("auth/login", loginmodel)
 }
 
 export const register = (registerModel) => {
-  service.post("auth/register", registerModel)
+ return service.post("auth/register", registerModel)
 }
