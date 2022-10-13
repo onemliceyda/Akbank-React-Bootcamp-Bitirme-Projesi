@@ -2,6 +2,7 @@ import React from "react"
 import { Paper } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import { Draggable } from "react-beautiful-dnd"
+import Modals from "../../Modal/Modals"
 const useStyle = makeStyles((theme) => ({
   card: {
     padding: theme.spacing(1, 1, 1, 2),
@@ -11,6 +12,9 @@ const useStyle = makeStyles((theme) => ({
 
 const Card = ({ card, index }) => {
   const classes = useStyle()
+  const [open, setOpen] = React.useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
   return (
     <Draggable draggableId={card.id} index={index} >
       {(provided) => (
@@ -19,7 +23,9 @@ const Card = ({ card, index }) => {
           {...provided.dragHandleProps}
           {...provided.draggableProps}
         >
-          <Paper className={classes.card}>{card.title}</Paper>
+          <Paper className={classes.card} onClick={handleOpen}  >{card.title} </Paper>
+          <Modals open={open} handleClose={handleClose}/>
+
         </div>
       )}
     </Draggable>

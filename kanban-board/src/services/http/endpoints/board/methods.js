@@ -1,6 +1,6 @@
 import service from "../../../instance"
 export const addNewListTitle = (title,config) => {
-  service.post(
+  return service.post(
     "board",
     {
       title,
@@ -9,11 +9,12 @@ export const addNewListTitle = (title,config) => {
 }
 
 export const addNewCard = (payload) => {
- service.post("board", payload)
-}
+  return service.post("board", payload)}
+
+
 
 export const addNewList = (title, boardId) => {
-   service.post(
+   return service.post(
     "board",
     {
       title,

@@ -6,6 +6,8 @@ import { addNewCard, addNewList } from "../../services/api"
 import storeApi from "../../utils/storeApi"
 import { AuthContext } from "../../contexts/AuthContext"
 import {board} from "../../services/http/endpoints/board"
+import { TitleOutlined } from "@material-ui/icons"
+import Modals from "../../Modal/Modals"
 const useStyle = makeStyles((theme) => ({
   card: {
     width: "280px",
@@ -31,11 +33,6 @@ const InputCard = ({ setOpen, listId, type }) => {
   const classes = useStyle()
   const { addCard, addList } = useContext(storeApi)
   const [title, setTitle] = useState("")
-
-   const {token}=useContext(AuthContext);
-  const config = {
-    headers: { Authorization: `Bearer ${token}` }
-  }; 
   
   const handleOnChange = (e) => {
     setTitle(e.target.value)
@@ -47,9 +44,13 @@ const InputCard = ({ setOpen, listId, type }) => {
       setTitle("")
       setOpen(false)
       console.log(title);
-      board.addNewCard({title},config).then(({data})=>{
+      board.addNewCard({title:title}).then(({data})=>{
         console.log(data);
-      })
+      }).catch((error) => {
+        if( error.response ){
+            console.log(error.response.data); // => the response payload 
+        }
+    });
       
      
     } else {
@@ -61,6 +62,7 @@ const InputCard = ({ setOpen, listId, type }) => {
       })
     }
   }
+
 
   return (
     <div>
@@ -88,6 +90,7 @@ const InputCard = ({ setOpen, listId, type }) => {
         <div></div>
         <IconButton onClick={() => setOpen(false)}></IconButton>
       </div>
+     
     </div>
   )
 }
