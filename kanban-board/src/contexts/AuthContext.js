@@ -1,56 +1,91 @@
-import { useEffect } from "react"
-import { createContext, useState } from "react"
+import { useState, createContext, useContext, useEffect } from "react"
+
 import instance from "../services/instance"
-export const AuthContext = createContext()
 
-const AuthContextProvider = (props) => {
-  const [values, setValues] = useState({
-    username: "",
-    email: "",
-    password: "",
-    passwordConfirm: "",
+
+const initialState = {
+  isLoggedIn: Boolean(localStorage.getItem("token")),
+  token: localStorage.getItem("token") || "",
+  username: localStorage.getItem("username") || "",
+}
+
+export const AuthContext =createContext( {
+    login: () => null,
+    logout: () => null,
+    state: initialState,
   })
+ 
 
-  const [token, setToken] = useState("")
+export const AuthContextProvider= ({ children }) => {
+  const [state, setState] = useState(initialState)
+
   useEffect(() => {
     instance.interceptors.request.use((config) => {
-      console.log("buraya gelebiliyor mu");
       const _config = { ...config }
       _config.headers = {
         ...config.headers,
-        authorization: "Bearer" + token,
+        authorization: "Bearer " + state.token,
       }
-      console.log(config);
       return _config
     })
-    /* instance.interceptors.response.use((response)=>{},(error)=>{
-      if([500,401,403].includes(error.response.status)){
-        console.log("Bir hata oluştu logine yönlendirileceksiniz.");
-      } //bu hatanın çıkacağı yer kontrol edilecek
-     }) */
-  }, [token])
 
-  const login = (data) => {
-    setToken(data.token)
-    console.log("lütfen çalışıyor ollll :(", data)
+    /* instance.interceptors.response.use(
+      (response) => {
+        return response
+      },
+      (error) => {
+        if ([500, 401, 403].includes(error.response.status)) {
+          setState((prev) => ({
+            ...prev,
+            isLoggedIn: false,
+            token: '',
+            username: '',
+          }))
+        }
+      }
+    ) */
+  }, [state.token])
+
+  const login = (token, username) => {
+    setState({
+      username,
+      token,
+      isLoggedIn: true,
+    })
+
+    localStorage.setItem("token", token)
+    localStorage.setItem("username", username)
   }
-  const [checked, setChecked] = useState(true)
-
-  const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value })
-  }
-
-  const handleSubmit = (formValues) => {
-    setValues(formValues)
+  const logout = () => {
+    setState({
+      username: "",
+      token: "",
+      isLoggedIn: false,
+    })
+    localStorage.setItem("token", "")
+    localStorage.setItem("username", "")
   }
 
   return (
     <AuthContext.Provider
-      value={{ values, checked, handleChange, handleSubmit, login, token }}
+      value={{
+        login: login,
+        logout: logout,
+        state: state,
+      }}
     >
-      {props.children}
+      {children}
     </AuthContext.Provider>
   )
 }
 
+export const useAuthContext = () => {
+  const { state, login, logout } = useContext(AuthContext)
+  return {
+    username: state.username,
+    isLoggedIn: state.isLoggedIn,
+    login,
+    logout,
+  }
+}
 export default AuthContextProvider

@@ -1,13 +1,27 @@
 import * as React from "react"
 import { Typography, Box, TextField, Button } from "@material-ui/core"
-import { AuthContext } from "../../contexts/AuthContext"
+import { useAuthContext } from "../../contexts/AuthContext"
 import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
-import {auth} from "../../services/http/endpoints/auth"
+import { auth } from "../../services/http/endpoints/auth"
 
 function RegisterForm() {
-  const { values, handleChange, handleSubmit } = useContext(AuthContext)
+  const { username, login, logout } = useAuthContext()
+  const [formValues, setFormValues] = React.useState({
+    username: "",
+    password: "",
+    passwordConfirm: "",
+  })
   let navigate = useNavigate()
+  const handleChange = (e) => {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value })
+  }
+  const handleSubmit = () => {
+    auth.register(formValues).then(({ data }) => {
+      login(data)
+    })
+    navigate("/board")
+  }
   return (
     <div>
       <form>
@@ -39,7 +53,7 @@ function RegisterForm() {
             type={"text"}
             margin="normal"
             name="username"
-            value={values.username}
+            value={formValues.username}
             onChange={handleChange}
           />
           <TextField
@@ -50,7 +64,7 @@ function RegisterForm() {
             type={"password"}
             margin="normal"
             name="password"
-            value={values.password}
+            value={formValues.password}
             onChange={handleChange}
           />
           <TextField
@@ -61,19 +75,15 @@ function RegisterForm() {
             type={"password"}
             margin="password"
             name="passwordConfirm"
-            value={values.passwordConfirm}
+            value={formValues.passwordConfirm}
             onChange={handleChange}
           />
           <Button
             sx={{ marginTop: 3, borderRadius: 3 }}
             variant="outlined"
             color="primary"
-            onSubmit={handleSubmit(values)}
-            onClick={()=>{
-              auth.register(values).then(({data})=>{
-                console.log(data);
-              })
-              navigate("/board")}}
+            // onSubmit={handleSubmit(formValues)}
+            onClick={handleSubmit}
           >
             Login
           </Button>

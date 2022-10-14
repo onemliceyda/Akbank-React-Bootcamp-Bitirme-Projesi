@@ -2,7 +2,7 @@ import * as React from "react"
 import { useContext } from "react"
 import { Typography, Box, TextField, Button } from "@material-ui/core"
 import { useNavigate } from "react-router-dom"
-import { AuthContext } from "../../contexts/AuthContext"
+import { useAuthContext } from "../../contexts/AuthContext"
 import {auth} from "../../services/http/endpoints/auth"
 
 
@@ -11,7 +11,8 @@ function LoginForm() {
     username: "",
     password: "",
   })
-  const { login } = useContext(AuthContext)
+  const { login } = useAuthContext()
+  //const { login } = useContext(AuthContextProvider)
 
   let navigate = useNavigate()
   const handleChange = (e) => {

@@ -4,10 +4,9 @@ import { makeStyles, alpha } from "@material-ui/core/styles"
 import { useState, useContext } from "react"
 import { addNewCard, addNewList } from "../../services/api"
 import storeApi from "../../utils/storeApi"
-import { AuthContext } from "../../contexts/AuthContext"
 import {board} from "../../services/http/endpoints/board"
 import { TitleOutlined } from "@material-ui/icons"
-import Modals from "../../Modal/Modals"
+
 const useStyle = makeStyles((theme) => ({
   card: {
     width: "280px",
