@@ -2,21 +2,19 @@ import { useState, createContext, useContext, useEffect } from "react"
 
 import instance from "../services/instance"
 
-
 const initialState = {
   isLoggedIn: Boolean(localStorage.getItem("token")),
   token: localStorage.getItem("token") || "",
   username: localStorage.getItem("username") || "",
 }
 
-export const AuthContext =createContext( {
-    login: () => null,
-    logout: () => null,
-    state: initialState,
-  })
- 
+export const AuthContext = createContext({
+  login: () => null,
+  logout: () => null,
+  state: initialState,
+})
 
-export const AuthContextProvider= ({ children }) => {
+export const AuthContextProvider = ({ children }) => {
   const [state, setState] = useState(initialState)
 
   useEffect(() => {
@@ -26,6 +24,7 @@ export const AuthContextProvider= ({ children }) => {
         ...config.headers,
         authorization: "Bearer " + state.token,
       }
+
       return _config
     })
 
@@ -46,15 +45,15 @@ export const AuthContextProvider= ({ children }) => {
     ) */
   }, [state.token])
 
-  const login = (token, username) => {
+  const login = (data) => {
     setState({
-      username,
-      token,
+      username: data.username,
+      token: data.token,
       isLoggedIn: true,
     })
 
-    localStorage.setItem("token", token)
-    localStorage.setItem("username", username)
+    localStorage.setItem("token", data.token)
+    localStorage.setItem("username", data.username)
   }
   const logout = () => {
     setState({

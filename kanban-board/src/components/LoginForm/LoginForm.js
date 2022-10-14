@@ -79,8 +79,8 @@ function LoginForm() {
             color="primary"
             onClick={() => {
               auth.login(formValues).then(({ data }) => {
-                login(data)
-               
+                login(data.token)
+               console.log(data.token);
               })
               navigate("/board")
             }}

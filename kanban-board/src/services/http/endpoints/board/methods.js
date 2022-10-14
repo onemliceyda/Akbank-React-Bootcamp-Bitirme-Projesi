@@ -4,7 +4,8 @@ export const addNewListTitle = (title,config) => {
     "board",
     {
       title,
-    },config
+    }     
+
   )
 }
 
