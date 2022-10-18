@@ -2,9 +2,9 @@ import React from "react"
 import { Paper, InputBase, Button, IconButton } from "@material-ui/core"
 import { makeStyles, alpha } from "@material-ui/core/styles"
 import { useState, useContext } from "react"
-import { addNewCard, addNewList } from "../../services/api"
 import storeApi from "../../utils/storeApi"
-import {board} from "../../services/http/endpoints/board"
+import {card} from "../../services/endpoints/card"
+import {list} from "../../services/endpoints/list"
 import { TitleOutlined } from "@material-ui/icons"
 
 const useStyle = makeStyles((theme) => ({
@@ -43,7 +43,7 @@ const InputCard = ({ setOpen, listId, type }) => {
       setTitle("")
       setOpen(false)
       console.log(title);
-      board.addNewCard({title:title}).then(({data})=>{
+      card.createCard({title:title}).then(({data})=>{
         console.log(data);
       }).catch((error) => {
         if( error.response ){
@@ -56,7 +56,7 @@ const InputCard = ({ setOpen, listId, type }) => {
       addList(title)
       setTitle("")
       setOpen(false)
-      board.addNewList(title,listId).then(({data})=>{
+      list.createNewList(title,listId).then(({data})=>{
         console.log(data);
       })
     }

@@ -1,28 +1,36 @@
 import React from "react"
+import "./App.css"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import LoginPage from "./pages/LoginPage"
+import RegisterPage from "./pages/RegisterPage"
+import HomePage from "./pages/HomePage"
+import { useLoginContext } from "./contexts/LoginContext"
 import CardComponent from "./components/Card/CardComponent"
-import LoginForm from "./components/LoginForm/LoginForm"
-import RegisterForm from "./components/RegisterForm/RegisterForm"
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom"
-import AuthContextProvider from "./contexts/AuthContext"
-
 function App() {
+  const { isLoggedIn } = useLoginContext()
+
   return (
-    <AuthContextProvider>
-      <Router>
-        {/* <nav>
-        <Link to="/board">Boards</Link>
-      </nav> */}
-        <Routes>
-          { <Route exact path="/" element={<LoginForm />} /> }
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/register" element={<RegisterForm />} />
-          { <Route path="/board" element={<CardComponent />} /> }
-          { <Route path="*" element={<CardComponent />} /> }
-        </Routes>
-      </Router>
-    </AuthContextProvider>
+    <div className="App">
+         {!isLoggedIn ? (
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+          </Routes>
+        </BrowserRouter>
+      ) : (
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/boards" element={<HomePage/>} />
+            
+          </Routes>
+        </BrowserRouter>
+      )} 
+      <CardComponent/>
+    </div>
   )
 }
-export default App
 
-//liste de gel config'i kopyala yapıştır.Api'de yazılan fonksiyonları yazdığın her yerde yapman gerekiyor.
+export default App

@@ -2,7 +2,6 @@ import React from "react"
 import { Paper } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import { Draggable } from "react-beautiful-dnd"
-import Modals from "../../Modal/Modals"
 const useStyle = makeStyles((theme) => ({
   card: {
     padding: theme.spacing(1, 1, 1, 2),
@@ -24,7 +23,6 @@ const Card = ({ card, index }) => {
           {...provided.draggableProps}
         >
           <Paper className={classes.card} onClick={handleOpen}  >{card.title} </Paper>
-          <Modals open={open} handleClose={handleClose}/>
 
         </div>
       )}

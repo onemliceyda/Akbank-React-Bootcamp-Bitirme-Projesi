@@ -2,9 +2,8 @@ import React, { useState, useContext } from "react"
 import { Typography, InputBase } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import storeApi from "../../utils/storeApi"
-import {addNewListTitle} from "../../services/api"
-import { AuthContext } from "../../contexts/AuthContext"
-import { board } from "../../services/http/endpoints/board"
+
+import { list } from "../../services/endpoints/list"
 const useStyle = makeStyles((theme) => ({
   root: {
     width: "300px",
@@ -32,16 +31,13 @@ const Title = ({ title,listId }) => {
   const classes = useStyle()
   const [newTitle, setNewTitle] = useState("")
   const { updateListTitle } = useContext(storeApi)
-/*   const {token}=useContext(AuthContext);
-  const config = {
-    headers: { Authorization: `Bearer ${token}` }
-  };  */
+
   const handleOnChange = (e) => {
     setNewTitle(e.target.value)
   }
   const handleOnBlur = () => {
     updateListTitle(newTitle,listId)
-    board.addNewListTitle(newTitle).then(({data})=>{
+    list.createListTitle(newTitle).then(({data})=>{
       console.log(data);
     })
     setOpen(false)
