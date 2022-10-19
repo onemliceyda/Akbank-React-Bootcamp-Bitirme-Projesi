@@ -1,4 +1,4 @@
 import service from "../../instance"
-export const createCard = (title,listId) => {
-    return service.post("board", title,listId)
+export const createCard = (payload) => {
+    return service.post("card", payload)
   }

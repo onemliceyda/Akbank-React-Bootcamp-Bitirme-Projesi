@@ -14,7 +14,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 }
-const Modals = ({open,handleClose}) => {
+const Modals = ({open,handleClose,card}) => {
  /*  const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false) */

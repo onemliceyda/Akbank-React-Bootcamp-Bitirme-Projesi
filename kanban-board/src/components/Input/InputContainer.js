@@ -3,6 +3,7 @@ import { Paper, Typography, Collapse } from "@material-ui/core"
 import { makeStyles, fade } from "@material-ui/core/styles"
 import InputCard from "./InputCard"
 import { useState } from "react"
+import { board } from "../../services/endpoints/board"
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -19,13 +20,13 @@ const useStyle = makeStyles((theme) => ({
   },
 }))
 
-const InputContainer = ({ listId, type }) => {
+const InputContainer = ({ listId, type,boardId}) => {
   const classes = useStyle()
   const [open, setOpen] = useState(false)
   return (
     <div className={classes.root}>
       <Collapse in={open}>
-        <InputCard setOpen={setOpen} listId={listId} type={type} />
+        <InputCard setOpen={setOpen} listId={listId} type={type} board={board} boardId={boardId} />
       </Collapse>
       <Collapse in={!open}>
         <Paper

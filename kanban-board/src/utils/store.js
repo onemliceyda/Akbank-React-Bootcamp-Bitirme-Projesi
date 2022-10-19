@@ -1,4 +1,4 @@
-const cards = [
+ const cards = [
   {
     id: "card-1",
     title: "Learning how to cook",
@@ -25,4 +25,4 @@ const data = { //axiostan çekilen verileri buradan al.
   listIds: ["list-1"],
 }
 
-export default data
+export default data 

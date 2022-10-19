@@ -9,7 +9,7 @@ export const getBoardList = () => {
   return service.get("board")
 }
 
-export const destroyBoardList=(payload)=>{
-  return service.delete("board",payload)
+export const destroyBoardList=(id)=>{
+  return service.delete(`board/${id}`)
 }
 

@@ -24,11 +24,11 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/boards" element={<HomePage/>} />
-            
+            <Route path="/board/:boardId" element={<CardComponent/>} />
+
           </Routes>
         </BrowserRouter>
       )} 
-      <CardComponent/>
     </div>
   )
 }

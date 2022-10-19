@@ -31,7 +31,6 @@ const Title = ({ title,listId }) => {
   const classes = useStyle()
   const [newTitle, setNewTitle] = useState("")
   const { updateListTitle } = useContext(storeApi)
-
   const handleOnChange = (e) => {
     setNewTitle(e.target.value)
   }

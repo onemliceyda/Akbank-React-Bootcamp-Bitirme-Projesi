@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import List from "../List/List"
 import { useState } from "react"
 import { v4 as uuid } from "uuid"
@@ -7,7 +7,9 @@ import StoreApi from "../../utils/storeApi"
 import InputContainer from "../Input/InputContainer"
 import { makeStyles } from "@material-ui/core/styles"
 import { DragDropContext, Droppable } from "react-beautiful-dnd"
-
+import Header from "../Header"
+import { useParams } from "react-router-dom"
+import { list as api, list } from "../../services/endpoints/list"
 const useStyle = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -15,46 +17,48 @@ const useStyle = makeStyles((theme) => ({
     background: "#C4D7E0",
     width: "100%",
     overflowY: "auto",
+    flexWrap: "wrap",
   },
 }))
 
 function CardComponent() {
   const [data, setData] = useState(store)
   const classes = useStyle()
-  const addCard = (title, listId) => {
-    const newCardId = uuid()
-    const newCard = {
-      id: newCardId,
-      title,
-    }
+  const [lists, setLists] = useState()
+  let { boardId } = useParams()
+  boardId = Number(boardId.slice(1))
 
-    const list = data.lists[listId]
-    list.cards = [...list.cards, newCard]
-    const newState = {
-      ...data,
-      lists: {
-        ...data.lists,
-        [listId]: list,
-      },
-    }
-    setData(newState)
+  useEffect(() => {
+    api.getList(boardId).then(({ data }) => {
+      setLists(data)
+    })
+    console.log("xxxx")
+  }, [boardId])
+
+  const addCard = (data, listId) => {
+    const newCard = data
+    console.log(data)
+    const array=[...lists]
+    const list = array.find((list) => listId === list.id)
+    list.cards.push(newCard)
+    setLists(array)
   }
 
-  const addList = (title) => {
-    const newListId = uuid()
+  const addList = (list) => {
     const newList = {
-      id: newListId,
-      title,
+      ...list,
       cards: [],
     }
-    const newState = {
+
+    setLists((prev) => [...prev, newList])
+    /* const newState = {
       listIds: [...data.listIds, newListId],
       lists: {
         ...data.lists,
         [newListId]: newList,
       },
     }
-    setData(newState)
+    setData(newState) */
   }
 
   const updateListTitle = (title, listId) => {
@@ -70,8 +74,6 @@ function CardComponent() {
     setData(newState)
   }
 
-
-
   const onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result
     console.log("destination", destination, "source", source, draggableId)
@@ -81,44 +83,48 @@ function CardComponent() {
     }
 
     if (type === "list") {
-      const newListIds = data.listIds
-      newListIds.splice(source.index, 1)
-      newListIds.splice(destination.index, 0, draggableId)
+    
+      const newLists = [...lists]
+      const temp=newLists.splice(source.index, 1)[0]
+      newLists.splice(destination.index, 0, temp)
+      setLists(newLists)
       return
     }
-    const sourceList = data.lists[source.droppableId]
-    const destinationList = data.lists[destination.droppableId]
+    const sourceList = lists.find((list)=>list.id==source.droppableId)
+    const destinationList =lists.find((list)=>list.id==destination.droppableId)
     const draggingCard = sourceList.cards.filter(
-      (card) => card.id === draggableId
+      (card) => String(card.id) === draggableId
     )[0]
     if (source.droppableId === destination.droppableId) {
       sourceList.cards.splice(source.index, 1)
       destinationList.cards.splice(destination.index, 0, draggingCard)
       const newState = {
-        ...data,
         lists: {
-          ...data.lists,
+          ...lists,
           [sourceList.id]: destinationList,
         },
       }
       //console.log(newState);
-      setData(newState)
+      setLists(newState)
     } else {
       sourceList.cards.splice(source.index, 1)
       destinationList.cards.splice(destination.index, 0, draggingCard)
 
-      const newState = {
-        ...data,
-        lists: {
-          ...data.lists,
-          [sourceList.id]: sourceList,
-          [destinationList.id]: destinationList,
-        },
-      }
+      // const newState = {
+        
+      //   lists: {
+      //     ...lists,
+      //     [sourceList.id]: sourceList,
+      //     [destinationList.id]: destinationList,
+      //   },
+      // }
     }
   }
   return (
-    <StoreApi.Provider value={{ addCard, addList, updateListTitle }}>
+    <StoreApi.Provider
+      value={{ addCard, addList, updateListTitle }}
+    >
+      <Header />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="app" type="list" direction="horizontal">
           {(provided) => (
@@ -127,11 +133,11 @@ function CardComponent() {
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              {data.listIds.map((listId, index) => {
-                const list = data.lists[listId]
-                return <List list={list} key={listId} index={index} />
-              })}
-              <InputContainer type="list" />
+              {lists &&
+                lists.map((list, index) => (
+                  <List list={list} key={list.id} index={index} />
+                ))}
+              <InputContainer type="list" boardId={boardId} />
               {provided.placeholder}
             </div>
           )}

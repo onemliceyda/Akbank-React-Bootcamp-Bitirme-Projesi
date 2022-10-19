@@ -18,13 +18,13 @@ const useStyle = makeStyles((theme) => ({
 const List = ({ list, index }) => {
   const classes = useStyle()
   return (
-    <Draggable draggableId={list.id} index={index}>
+    <Draggable draggableId={String(list.id)} index={index}>
       {(provided) => (
         <div {...provided.draggableProps} ref={provided.innerRef}>
           <Paper className={classes.root} {...provided.dragHandleProps}>
             <CssBaseline />
             <Title title={list.title} listId={list.id} />
-            <Droppable droppableId={list.id}>
+            <Droppable droppableId={String(list.id)}>
               {(provided) => (
                 <div
                   ref={provided.innerRef}
@@ -32,7 +32,7 @@ const List = ({ list, index }) => {
                   className={classes.cardContainer}
                 >
                   {list.cards.map((card, index) => (
-                    <Card key={card.id} card={card} index={index} />
+                    <Card key={String(card.id)} card={card} index={index} />
                   ))}
                   {provided.placeholder}
                 </div>

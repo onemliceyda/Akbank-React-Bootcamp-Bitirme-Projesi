@@ -14,12 +14,15 @@ const Header = () => {
     logout()
     navigate("/login")
   }
+  const handleOnClick = () => {
+    navigate("/boards")
+  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{ background: "#251B37" }}>
         <Toolbar color={"#251B37"}>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Kanban Board
+            <Button color="inherit" onClick={handleOnClick}>Kanban Board</Button>
           </Typography>
           <Button onClick={handleClick} color="inherit">
             Logout

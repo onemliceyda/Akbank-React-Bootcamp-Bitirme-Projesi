@@ -3,8 +3,8 @@ import { Paper, InputBase, Button, IconButton } from "@material-ui/core"
 import { makeStyles, alpha } from "@material-ui/core/styles"
 import { useState, useContext } from "react"
 import storeApi from "../../utils/storeApi"
-import {card} from "../../services/endpoints/card"
-import {list} from "../../services/endpoints/list"
+import { card } from "../../services/endpoints/card"
+import { list } from "../../services/endpoints/list"
 import { TitleOutlined } from "@material-ui/icons"
 
 const useStyle = makeStyles((theme) => ({
@@ -28,40 +28,36 @@ const useStyle = makeStyles((theme) => ({
   },
 }))
 
-const InputCard = ({ setOpen, listId, type }) => {
+const InputCard = ({ setOpen, listId, type, cardId, boardId }) => {
   const classes = useStyle()
-  const { addCard, addList } = useContext(storeApi)
+  const { addCard, addList, updateCardTitle } = useContext(storeApi)
   const [title, setTitle] = useState("")
-  
+  const [newTitle, setNewTitle] = useState("")
+
   const handleOnChange = (e) => {
     setTitle(e.target.value)
   }
 
   const handleBtnConfirm = () => {
     if (type === "card") {
-      addCard(title, listId)
       setTitle("")
       setOpen(false)
-      console.log(title);
-      card.createCard({title:title}).then(({data})=>{
-        console.log(data);
-      }).catch((error) => {
-        if( error.response ){
-            console.log(error.response.data); // => the response payload 
-        }
-    });
-      
-     
+      card.createCard({ title, listId }).then(({ data }) => {
+        addCard(data,listId)
+      })
     } else {
-      addList(title)
       setTitle("")
       setOpen(false)
-      list.createNewList(title,listId).then(({data})=>{
-        console.log(data);
+      list.createNewList({ title, boardId }).then(({ data }) => {
+        addList(data)
       })
     }
   }
 
+  /* const handleOnBlur = () => {
+    updateCardTitle(newTitle, cardId)
+    setOpen(false)
+  } */
 
   return (
     <div>
@@ -70,7 +66,7 @@ const InputCard = ({ setOpen, listId, type }) => {
           <InputBase
             onChange={handleOnChange}
             multiline
-            onBlur={() => setOpen(false)}
+           // onBlur={handleOnBlur}
             fullWidth
             inputProps={{
               className: classes.input,
@@ -89,7 +85,6 @@ const InputCard = ({ setOpen, listId, type }) => {
         <div></div>
         <IconButton onClick={() => setOpen(false)}></IconButton>
       </div>
-     
     </div>
   )
 }
