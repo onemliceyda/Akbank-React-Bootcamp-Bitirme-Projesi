@@ -6,10 +6,10 @@ export const createNewList = (payload) => {
 }
 
 export const createListTitle=(id,payload)=>{
-  return service.put(`list${id}`,payload)
+  return service.put(`list/${id}`,payload)
 }
 export const destroyList=(id)=>{
-  return service.delete(`list${id}`)
+  return service.delete(`list/${id}`)
 }
 export const getList=(boardId)=>{
 return service.get(`list?boardId=${boardId}`)

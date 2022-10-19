@@ -38,7 +38,7 @@ function CardComponent() {
   const addCard = (data, listId) => {
     const newCard = data
     console.log(data)
-    const array=[...lists]
+    const array = [...lists]
     const list = array.find((list) => listId === list.id)
     list.cards.push(newCard)
     setLists(array)
@@ -62,16 +62,12 @@ function CardComponent() {
   }
 
   const updateListTitle = (title, listId) => {
-    const list = data.lists[listId]
-    list.title = title
-    const newState = {
-      ...data,
-      lists: {
-        ...data.lists,
-        [listId]: list,
-      },
-    }
-    setData(newState)
+    const array = [...lists]
+    const list = array.find((list) => listId === list.id)
+    list.title=title
+    setLists(array)
+    
+    
   }
 
   const onDragEnd = (result) => {
@@ -83,15 +79,16 @@ function CardComponent() {
     }
 
     if (type === "list") {
-    
       const newLists = [...lists]
-      const temp=newLists.splice(source.index, 1)[0]
+      const temp = newLists.splice(source.index, 1)[0]
       newLists.splice(destination.index, 0, temp)
       setLists(newLists)
       return
     }
-    const sourceList = lists.find((list)=>list.id==source.droppableId)
-    const destinationList =lists.find((list)=>list.id==destination.droppableId)
+    const sourceList = lists.find((list) => list.id == source.droppableId)
+    const destinationList = lists.find(
+      (list) => list.id == destination.droppableId
+    )
     const draggingCard = sourceList.cards.filter(
       (card) => String(card.id) === draggableId
     )[0]
@@ -111,7 +108,7 @@ function CardComponent() {
       destinationList.cards.splice(destination.index, 0, draggingCard)
 
       // const newState = {
-        
+
       //   lists: {
       //     ...lists,
       //     [sourceList.id]: sourceList,
@@ -121,9 +118,7 @@ function CardComponent() {
     }
   }
   return (
-    <StoreApi.Provider
-      value={{ addCard, addList, updateListTitle }}
-    >
+    <StoreApi.Provider value={{ addCard, addList, updateListTitle }}>
       <Header />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="app" type="list" direction="horizontal">

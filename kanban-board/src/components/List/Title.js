@@ -34,10 +34,12 @@ const Title = ({ title,listId }) => {
   const handleOnChange = (e) => {
     setNewTitle(e.target.value)
   }
-  const handleOnBlur = () => {
-    updateListTitle(newTitle,listId)
-    list.createListTitle(newTitle).then(({data})=>{
+  const handleOnBlur = (e) => {
+    console.log(e.target.value)
+    updateListTitle(e.target.value,listId)
+    list.createListTitle(listId,{title:e.target.value}).then(({data})=>{
       console.log(data);
+
     })
     setOpen(false)
   }

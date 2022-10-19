@@ -25,7 +25,7 @@ const Card = ({ card, index }) => {
         >
           <Paper className={classes.card} onClick={handleOpen}>
             {card.title}
-          </Paper> //card.duedate dicez
+          </Paper> {/* //card.duedate dicez */}
           <Modals card={card} /> 
         </div>
       )}
