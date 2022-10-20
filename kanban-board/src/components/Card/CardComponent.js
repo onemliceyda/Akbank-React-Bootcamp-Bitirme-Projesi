@@ -33,7 +33,7 @@ function CardComponent() {
       setLists(data)
     })
     console.log("xxxx")
-  }, [boardId])
+  }, [])
 
   const addCard = (data, listId) => {
     const newCard = data

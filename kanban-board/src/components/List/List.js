@@ -17,6 +17,7 @@ const useStyle = makeStyles((theme) => ({
 }))
 const List = ({ list, index }) => {
   const classes = useStyle()
+  console.log(list.cards);
   return (
     <Draggable draggableId={String(list.id)} index={index}>
       {(provided) => (
