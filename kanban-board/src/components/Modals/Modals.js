@@ -52,8 +52,6 @@ const Modals = ({ open, handleClose, card }) => {
     handleClose()
   }
 
-  const { updateCardTitle } = React.useContext(storeApi)
-
   return (
     <div>
       <Grid container direction={"row"} spacing={5}>

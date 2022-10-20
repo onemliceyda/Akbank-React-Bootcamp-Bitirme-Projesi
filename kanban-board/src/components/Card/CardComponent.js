@@ -121,7 +121,7 @@ function CardComponent() {
   }
   return (
     <StoreApi.Provider value={{ addCard, addList, updateListTitle }}>
-      <Header />
+      <Header lists={lists} />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="app" type="list" direction="horizontal">
           {(provided) => (

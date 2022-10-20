@@ -73,7 +73,7 @@ const InputCard = ({ setOpen, listId, type, cardId, boardId }) => {
             }}
             value={title}
             placeholder={
-              type === "card" ? "Kart içeriğini giriniz" : "Kart oluşturunuz"
+              type === "card" ? "Kart oluşturunuz " : "Liste oluşturunuz"
             }
           />
         </Paper>
