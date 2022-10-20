@@ -10,7 +10,7 @@
 
 
 #### Kimlik Doğrulama
-* JWT Auth ile local storage yardımıyla kimlik doğrulamanmıştır.
+* JWT Auth ile local storage yardımıyla kimlik doğrulanmıştır.
 
 #### Veri Yönetmek İçin Kullanılan Yöntem
 * React Context API.
