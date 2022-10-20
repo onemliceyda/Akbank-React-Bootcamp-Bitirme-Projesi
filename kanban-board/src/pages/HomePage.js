@@ -14,6 +14,8 @@ import {
 } from "@mui/material"
 import { useParams } from "react-router-dom"
 import CloseIcon from "@mui/icons-material/Close"
+import AddIcon from "@mui/icons-material/Add"
+import Grid from "@material-ui/core/Grid"
 const HomePage = () => {
   const navigate = useNavigate()
   const [boards, setNewBoards] = useState([])
@@ -27,7 +29,7 @@ const HomePage = () => {
   const handleDeleteBoard = (id) => {
     board.destroyBoardList(id).then(({ data }) => {
       console.log(data)
-     setNewBoards(boards.filter((board)=> board.id!==id))
+      setNewBoards(boards.filter((board) => board.id !== id))
     })
   }
   const handleBoardClick = (id) => {
@@ -43,30 +45,50 @@ const HomePage = () => {
   return (
     <div>
       <Header />
-
-      <div className="header text-center">
-        <Boards />
-
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          <Button color="inherit" onClick={handleCreateBoard}>
-            Add Board
-          </Button>
-        </Typography>
-        <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-          {boards.map((board, index) => (
-            <Card sx={{ maxWidth: 345, m: 1 }} key={index}>
-              <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                  <Button onClick={() => handleBoardClick(board.id)}>{board.title}</Button>
-                  <IconButton onClick={() => handleDeleteBoard(board.id)}>
-                    <CloseIcon />
-                  </IconButton>
-                </Typography>
-              </CardContent>
-            </Card>
-          ))}
-        </Box>
-      </div>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: "100vh" }}
+      >
+      
+          <div className="header text-center">
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                textAlign: "center",
+                color: "secondary.main",
+              }}
+            >
+              {boards.map((board, index) => (
+                <Card sx={{ maxWidth: 345, m: 1 }} key={index}>
+                  <CardContent>
+                    <Typography variant="body2" color="text.secondary">
+                      <Button onClick={() => handleBoardClick(board.id)}>
+                        {board.title}
+                      </Button>
+                      <IconButton onClick={() => handleDeleteBoard(board.id)} sx={{color:"secondary"}}>
+                        <CloseIcon />
+                      </IconButton>
+                    </Typography>
+                  </CardContent>
+                </Card>
+              ))}
+              <Card sx={{ maxWidth: 345, m: 1 }}>
+                <CardContent>
+                  <Typography variant="h5" color="text.secondary">
+                    <IconButton onClick={handleCreateBoard} sx={{color:"secondary"}}>
+                   <AddIcon />   Add Board 
+                    </IconButton>
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Box>
+          </div>
+        </Grid>
     </div>
   )
 }

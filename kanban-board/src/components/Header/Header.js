@@ -22,9 +22,11 @@ const Header = () => {
       <AppBar position="static" style={{ background: "#251B37" }}>
         <Toolbar color={"#251B37"}>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Button color="inherit" onClick={handleOnClick}>Kanban Board</Button>
+            <Button color="secondary" onClick={handleOnClick}>
+              Kanban Board
+            </Button>
           </Typography>
-          <Button onClick={handleClick} color="inherit">
+          <Button onClick={handleClick} color="secondary">
             Logout
           </Button>
         </Toolbar>

@@ -1,8 +1,16 @@
 import * as React from "react"
-import { Box, Button, Typography, Modal, TextField } from "@material-ui/core"
+import {
+  Box,
+  Modal,
+  Button,
+  Typography,
+  TextField,
+  IconButton,
+} from "@mui/material"
 import EditIcon from "@material-ui/icons/Edit"
 import CloseIcon from "@material-ui/icons/Close"
 import { useState } from "react"
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -13,11 +21,13 @@ const style = {
   border: "2px solid #b05370",
   boxShadow: 24,
   p: 4,
+  display: "flex",
+  flexWrap: "wrap",
 }
-const Modals = ({open,handleClose,card}) => {
- /*  const [open, setOpen] = React.useState(false)
+const Modals = ({  card }) => {
+   const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false) */
+  const handleClose = () => setOpen(false) 
   const [content, setNewContent] = useState("")
 
   const changeHandler = (e) => {
@@ -25,12 +35,13 @@ const Modals = ({open,handleClose,card}) => {
       ...content,
       [e.target.name]: e.target.value,
     })
-    console.log(content);
+    console.log(content)
   }
   const submitHandler = (e) => {
     e.preventDefault()
     setNewContent("")
   }
+
   return (
     <div>
       <Modal
@@ -41,46 +52,47 @@ const Modals = ({open,handleClose,card}) => {
       >
         <Box sx={style} textAlign="center" width={200}>
           <TextField
-            id="standard-basic"
-            label="Standard"
-            variant="standard"
+            id="outlined-basic"
+            label="Title"
+            variant="outlined"
             onChange={changeHandler}
-            value={content.board}
+            value={card.title}
+            fullWidth
           />
 
           <TextField
             fullWidth
-            label="fullWidth"
-            id="fullWidth"
+            label="Description"
+            id="description"
             sx={{
               width: "100%",
               marginBottom: "10px",
             }}
             onChange={changeHandler}
-            value={content.title}
+            value={card.description}
           />
           <TextField
-            id="outlined-multiline-static"
-            label="Description"
-            multiline
-            fullWidth="100%"
+            id="outlined-basic"
+            label="Comment"
             variant="outlined"
-            row={10}
-            sx={{
-              width: "100%",
-              marginBottom: "10px",
-              padding: "8px",
-            }}
             onChange={changeHandler}
-            value={content.description}
+            value={card.dueData}
+            fullWidth
           />
-          <Button
+
+       
+
+          <IconButton
             onClick={handleClose}
             variant="contained"
             color="primary"
+            sx={{ justifyContent: "center" }}
           >
-            Kapat <CloseIcon />
-          </Button>
+            <EditIcon />
+          </IconButton>
+          <IconButton onClick={handleClose} variant="contained" color="primary">
+            <CloseIcon />
+          </IconButton>
         </Box>
       </Modal>
     </div>
