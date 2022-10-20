@@ -6,10 +6,13 @@ import {
   Typography,
   TextField,
   IconButton,
+  Grid
 } from "@mui/material"
 import { useState } from "react"
 import EditIcon from "@material-ui/icons/Edit"
 import CloseIcon from "@material-ui/icons/Close"
+import { card as api } from "../../services/endpoints/card"
+import storeApi from "../../utils/storeApi"
 const style = {
   position: "absolute",
   top: "50%",
@@ -24,30 +27,39 @@ const style = {
 
 const Modals = ({ open, handleClose, card }) => {
   const [content, setNewContent] = useState({
-    title: "",
-    dueData: "",
-    description: "",
-    comment: [],
+    title: card.title,
+    dueData: card.dueData,
+    description: card.description,
   })
-
 
   const changeHandler = (e) => {
     setNewContent({
       ...content,
       [e.target.name]: e.target.value,
     })
-    console.log(content)
   }
-  const submitHandler = (e) => {
-    e.preventDefault()
-    setNewContent("")
+
+  const handleSubmit = () => {
+    api
+      .updateCard(card.id, content)
+      .then(({ data }) => {
+        console.log(data)
+        setNewContent(data)
+      })
+      .catch((err) => {
+        return err
+      })
+    handleClose()
   }
-  const handleChange = () => {
-    console.log("deneme")
-  }
+
+  const { updateCardTitle } = React.useContext(storeApi)
+
   return (
     <div>
+      <Grid container direction={"row"} spacing={5}>
+  <Grid item>
       <Modal
+        onSubmit={handleSubmit}
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -55,40 +67,36 @@ const Modals = ({ open, handleClose, card }) => {
       >
         <Box sx={style}>
           <TextField
-            id="outlined-basic"
             label="Title"
             variant="outlined"
             onChange={changeHandler}
-            value={card.title}
+            value={content.title}
             fullWidth
+            name="title"
           />
 
           <TextField
             fullWidth
             label="Description"
-            id="outlined-basic"
             sx={{
               width: "100%",
               marginBottom: "10px",
+      
             }}
             onChange={changeHandler}
-            value={card.description}
+            value={content.description}
+            name="description"
           />
           <TextField
-            id="outlined-basic"
-            label="Comment"
             variant="outlined"
-            onChange={changeHandler}
-            value={card.dueData}
+            type="date"
             fullWidth
-            sx={{
-              width: "100%",
-              marginBottom: "10px",
-            }}
+            value={content.duedate}
+            onChange={changeHandler}
+            name="duedate"
           />
-              <TextField id="outlined-basic" variant="outlined" type="date" fullWidth/>
           <IconButton
-            onChange={handleChange}
+            onClick={handleSubmit}
             variant="contained"
             color="primary"
             sx={{ flexWrap: "wrap" }}
@@ -105,9 +113,10 @@ const Modals = ({ open, handleClose, card }) => {
             <CloseIcon />
             Close
           </IconButton>
-      
         </Box>
       </Modal>
+      </Grid>
+      </Grid>
     </div>
   )
 }

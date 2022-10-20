@@ -9,7 +9,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import { DragDropContext, Droppable } from "react-beautiful-dnd"
 import Header from "../Header"
 import { useParams } from "react-router-dom"
-import { list as api, list } from "../../services/endpoints/list"
+import { list as api } from "../../services/endpoints/list"
 const useStyle = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -67,8 +67,10 @@ function CardComponent() {
     list.title=title
     setLists(array)
     
-    
   }
+
+  
+
 
   const onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result

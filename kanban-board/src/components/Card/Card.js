@@ -2,7 +2,7 @@ import React from "react"
 import { Paper } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import { Draggable } from "react-beautiful-dnd"
-import { IconButton } from "@mui/material"
+import { IconButton, Typography, Divider } from "@mui/material"
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import Modals from "../Modals"
 const useStyle = makeStyles((theme) => ({
@@ -26,11 +26,17 @@ const Card = ({ card, index }) => {
           {...provided.draggableProps}
         >
           <Paper className={classes.card} onClick={handleOpen}>
-            {card.title}
-            <IconButton onClick={handleOpen} sx={{marginLeft:35}}>
-              <VisibilityIcon />
-            </IconButton>
+            <Typography sx={{color:"#00adb5"}}>
+              {card.title}
+              <IconButton onClick={handleOpen} sx={{ marginBlockEnd:0 }}>
+                <VisibilityIcon />
+              </IconButton>
+            </Typography>
+            <Divider />
+            <Typography>{card.description}</Typography>
+            <Typography  sx={{bgcolor:"#CF0A0A",borderRadius:"5px",marginLeft:"-7px",textAlign:"center",color:"#FFFF"}}>{card.duedate}</Typography>
           </Paper>
+
           {/* //card.duedate dicez */}
 
           <Modals open={open} handleClose={handleClose} card={card} />

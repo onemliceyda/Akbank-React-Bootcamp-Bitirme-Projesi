@@ -16,6 +16,7 @@ import { useParams } from "react-router-dom"
 import CloseIcon from "@mui/icons-material/Close"
 import AddIcon from "@mui/icons-material/Add"
 import Grid from "@material-ui/core/Grid"
+
 const HomePage = () => {
   const navigate = useNavigate()
   const [boards, setNewBoards] = useState([])
@@ -40,7 +41,7 @@ const HomePage = () => {
     board.getBoardList().then(({ data }) => {
       setNewBoards(data)
     })
-  }, [boards])
+  }, [])
 
   return (
     <div>
