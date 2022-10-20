@@ -9,8 +9,8 @@
 1. <code>npm install && npm start</code>
 
 
-#### Kmlik Doğrulama
-* JWT Auth utilizing local storage.
+#### Kimlik Doğrulama
+* JWT Auth ile local storage yardımıyla kimlik doğrulamanmıştır.
 
 #### Veri Yönetmek İçin Kullanılan Yöntem
 * React Context API.
